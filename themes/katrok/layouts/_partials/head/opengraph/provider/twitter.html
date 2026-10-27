@@ -4,7 +4,7 @@
 {{- if .IsHome -}}
 <meta name="twitter:title" {{ printf "content=\"%s - The site of Ndeso\"" $title | safeHTMLAttr }}>
 {{- else if and .IsPage (strings.HasSuffix .RelPermalink "/author/katrok/") -}}
-<meta name="twitter:title" {{ printf "content=\"Author Name: %s - %s\"" $title .Site.Title | safeHTMLAttr }}>
+<meta name="twitter:title" {{ printf "content=\"Author Name: %s\"" $title | safeHTMLAttr }}>
 {{- else if eq .Layout "archives" -}}
 <meta name="twitter:title" {{ printf "content=\"%s - %s\"" $title .Site.Title | safeHTMLAttr }}>
 {{- else if and .IsPage (ne .Section "page") -}}
