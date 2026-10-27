@@ -3,9 +3,6 @@ title: "Profil Penulis"
 description: "Profil resmi Cah Katrok, kreator dan penulis utama di platform media digital Katrok."
 slug: "katrok"
 layout: "katrok"
-draft: false
-outputs:
-    - html
 ---
 
 **Katrok** adalah seorang praktisi otodidak dan pemerhati perkembangan teknologi digital yang berbasis di Indonesia. Memiliki ketertarikan mendalam pada dunia pengembangan web modern, kecerdasan buatan (*artificial intelligence*), dan optimasi sistem digital, ia mendirikan platform **Katrok: The site of Ndeso** sebagai wadah literasi teknologi yang inklusif.
