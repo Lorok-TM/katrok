@@ -3,9 +3,9 @@
 {{- $title := partial "data/title" . -}}
 <title>
 {{- if .IsHome -}}
-{{ .Site.Title }} - Konten Terlengkap dan Terbaru
+{{ .Site.Title }} - The site of Ndeso
 {{- else if and .IsPage (strings.HasSuffix .RelPermalink "/author/katrok/") -}}
-Author Name: {{ $title }} - {{ .Site.Title }}
+Author Name: {{ $title }}
 {{- else if eq .Layout "archives" -}}
 {{ $title }} - {{ .Site.Title }} 
 {{- else if and .IsPage (ne .Section "page") -}}
