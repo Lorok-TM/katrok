@@ -1,6 +1,8 @@
 baseURL = "https://katrok.vercel.app"
-locale = "id"
 title = "Katrok"
+description = "Katrok adalah platform media digital independen yang menyajikan informasi terkini seputar perkembangan teknologi modern, gadget, dan edukasi digital secara ringkas dan mudah dipahami."
+locale = "id"
+author = "Katrok"
 theme = "katrok"
 disableHugoGeneratorInject = true
 
@@ -44,8 +46,6 @@ disableHugoGeneratorInject = true
   weight = 80
   
 [params]
-  description = "Situs katrok terbaru."
-  author = "Katrok"
   showRelated = true
   relatedLimit = 3
   
