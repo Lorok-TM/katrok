@@ -1,0 +1,47 @@
+{{- $title := partialCached "data/title" . .RelPermalink -}}
+{{- $description := partialCached "data/description" . .RelPermalink -}}
+
+{{- if .IsHome -}}
+<meta name="twitter:title" {{ printf "content=\"%s - Konten Terlengkap dan Terbaru\"" $title | safeHTMLAttr }}>
+{{- else if and .IsPage (strings.HasSuffix .RelPermalink "/author/katrok/") -}}
+<meta name="twitter:title" {{ printf "content=\"Author Name: %s - %s\"" $title .Site.Title | safeHTMLAttr }}>
+{{- else if eq .Layout "archives" -}}
+<meta name="twitter:title" {{ printf "content=\"%s - %s\"" $title .Site.Title | safeHTMLAttr }}>
+{{- else if and .IsPage (ne .Section "page") -}}
+<meta name="twitter:title" {{ printf "content=\"%s\"" ($title | plainify | replaceRE "\n" " " | replaceRE "\r" " ") | safeHTMLAttr }}>
+{{- else if eq .Kind "taxonomy" -}}
+<meta name="twitter:title" {{ printf "content=\"List %s - %s\"" $title .Site.Title | safeHTMLAttr }}>
+{{- else if eq .Kind "term" -}}
+<meta name="twitter:title" {{ printf "content=\"Kumpulan artikel %s - %s\"" $title .Site.Title | safeHTMLAttr }}>
+{{- else if not .Page.IsPage -}}
+<meta name="twitter:title" {{ printf "content=\"List %s - %s\"" $title .Site.Title | safeHTMLAttr }}>
+{{- else if .Page.IsPage -}}
+<meta name="twitter:title" {{ printf "content=\"%s - %s\"" $title .Site.Title | safeHTMLAttr }}>
+{{- else if eq .Kind "section" -}}
+<meta name="twitter:title" {{ printf "content=\"Arsip Artikel %s - %s\"" $title .Site.Title | safeHTMLAttr }}>
+{{- else -}}
+<meta name="twitter:title" {{ printf "content=%q" $title | safeHTMLAttr }}>
+{{- end -}}
+
+{{- if eq .Kind "term" -}}
+<meta name="twitter:description" content={{ printf "Kumpulan artikel %s lengkap di %s, mulai dari yang terbaru hingga yang lama. Untuk selengkapnya kunjungi disini." $title .Site.Title | safeHTMLAttr }}>
+{{- else -}}
+<meta name="twitter:description" {{ printf "content=\"%s\"" ($description | plainify | replaceRE "\n" " " | replaceRE "\r" " " | truncate 155 "...") | safeHTMLAttr }}>
+{{- end -}}
+
+{{- $image := partial "helper/image" (dict "Image" .Params.image "Resources" .Resources "Context" .) -}}
+{{- if $image -}}
+<meta name="twitter:card" content="{{ .Site.Params.opengraph.twitter.card }}">
+<meta name="twitter:image" content='{{ absURL $image.Permalink }}'>
+{{- else -}}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="#">
+{{- end -}}
+
+{{- with .Site.Params.opengraph.twitter.site -}}
+<meta name="twitter:site" content="@{{ . }}">
+<meta name="twitter:creator" content="@{{ . }}">
+{{- else -}}
+<meta name="twitter:site" content="@expose">
+<meta name="twitter:creator" content="@katrok">
+{{- end -}}

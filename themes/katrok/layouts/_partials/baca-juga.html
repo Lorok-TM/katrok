@@ -1,0 +1,22 @@
+{{- $current := . -}}
+{{- $found := false -}}
+
+{{- /* Golek artikel soko kategori sing podo, tapi dudu artikel iki dewe */ -}}
+{{- range first 500 (where .Site.RegularPages "Section" .Section) -}}
+{{- if and (not $found) (ne .Permalink $current.Permalink) -}}
+{{- if intersect .Params.categories $current.Params.categories -}}
+<p class="baca-juga"><strong>Baca Juga:</strong> <a href="{{ .Permalink }}">{{ .Title }}</a></p>
+{{- $found = true -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+
+{{- /* Variasi Backup: Yen ra ono kategori sing podo, njupuk soko artikel paling anyar liyane */ -}}
+{{- if not $found -}}
+{{- range first 500 .Site.RegularPages -}}
+{{- if and (not $found) (ne .Permalink $current.Permalink) -}}
+<p class="baca-juga"><strong>Baca Juga:</strong> <a href="{{ .Permalink }}">{{ .Title }}</a></p>
+{{- $found = true -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}

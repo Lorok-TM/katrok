@@ -1,0 +1,22 @@
+{{- $validURLs := dict -}}
+{{- range site.Pages -}}
+{{- $validURLs = merge $validURLs (dict .RelPermalink true) -}}
+{{- end -}} 
+{{- $brokenLinks := slice -}}
+{{- range .Site.RegularPages -}}
+{{- $page := . -}}
+{{- $links := findRE `href="([^"]+)"|\]\(([^)]+)\)` .Content -}}
+{{- range $links -}}
+{{- $url := . | replaceRE `href="([^"]+)"` "$1" | replaceRE `\]\(([^)]+)\)` "$1" -}}
+{{- if and (hasPrefix $url "/") (not (hasPrefix $url "http")) -}}
+{{- $urlclean := index (split (index (split $url "#") 0) "?") 0 -}}
+{{- if not (index $validURLs $urlclean) -}}
+{{- $brokenLinks = $brokenLinks | append (dict "page" $page.File.Path "target_broken_url" $url) -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+{{- if len $brokenLinks -}}
+{{- errorf "\n\n🚨 BROKEN LINK, BRO!\n%s\n" (jsonify (dict "indent" " ") $brokenLinks) -}}
+{{- end -}}
+{} 

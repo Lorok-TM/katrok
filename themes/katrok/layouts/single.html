@@ -1,0 +1,28 @@
+{{- define "body-class" -}}
+    article-page
+    {{- $HasWidgetNotTOC := false -}}
+    {{- $TOCWidgetEnabled := false -}}
+    {{- range .Site.Params.widgets.page -}}
+        {{- if ne .type "toc" -}}
+            {{- $HasWidgetNotTOC = true -}}
+        {{- else -}}
+            {{ $TOCWidgetEnabled = true -}}
+        {{- end -}}
+    {{- end -}}
+
+    {{- $TOCEnabled := and (default .Site.Params.article.toc .Params.toc) $TOCWidgetEnabled -}}
+    {{- $hasTOC := ge (len .TableOfContents) 100 -}}
+    {{- .Scratch.Set "TOCEnabled" (and $TOCEnabled $hasTOC) -}}
+    
+    {{- .Scratch.Set "hasWidget" (or $HasWidgetNotTOC (and $TOCEnabled $hasTOC)) -}}
+{{- end -}}
+
+{{- define "main" -}}
+{{- partial "breadcrumbs.html" . -}}
+{{- partial "article/article.html" . -}}
+{{ partial "article/components/related-content" . }}
+{{- /* KIYE KODE SING DISISIPKE */ -}}
+{{- if eq .Section "post" -}}
+{{- partial "article/components/navigation.html" . -}}
+{{- end -}}
+{{- end -}}

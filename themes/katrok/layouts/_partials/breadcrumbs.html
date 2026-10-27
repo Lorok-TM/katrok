@@ -1,0 +1,28 @@
+<nav class='breadcrumbs' itemscope='itemscope' itemtype='https://schema.org/BreadcrumbList'><ul>
+{{- /* 1. KABEH ALUR PASTI DUWE: HOME (POSITION 1) */ -}}
+<li itemprop='itemListElement' itemscope='itemscope' itemtype='https://schema.org/ListItem'><a itemprop="item" href="{{ site.BaseURL }}"><span itemprop="name">Home</span></a><meta itemprop='position' content='1'></li>
+{{- /* --- LOGIKA NYARING ALUR FOLDER --- */ -}}
+{{- if .IsPage -}}
+{{- if eq .Section "post" -}}
+{{- /* ==== A. KUSUS SINGLE POSTINGAN (POSITION 2) Hasil murni: Home > Nama Categories ==== */ -}}
+{{- with .Params.categories -}}
+{{- range first 1 . -}}
+{{- $categoryPage := site.GetPage (printf "categories/%s" (. | urlize)) -}}
+{{- if $categoryPage -}}
+<li itemprop='itemListElement' itemscope='itemscope' itemtype='https://schema.org/ListItem'><a itemprop="item" href="{{ $categoryPage.Permalink }}"><span itemprop="name">{{ $categoryPage.Title }}</span></a><meta itemprop="position" content="2"></li>
+{{- else -}}
+<li itemprop='itemListElement' itemscope='itemscope' itemtype='https://schema.org/ListItem'><link itemprop="item" href="{{ site.BaseURL }}categories/{{ . | urlize }}/"><span itemprop="name">{{ . }}</span><meta itemprop="position" content="2"></li>
+{{- end -}}
+{{- end -}}
+{{- end -}}
+{{- else if eq .Section "page" -}}
+{{- /* ===== B. KUSUS SINGLE PAGE (About, Contact) (POSITION 2) Hasil murni: Home > About ===== */ -}}
+<li itemprop='itemListElement' itemscope='itemscope' itemtype='https://schema.org/ListItem'><link itemprop="item" href="{{ .Permalink }}"><span itemprop="name">{{ .Title }}</span><meta itemprop="position" content="2"></li>
+{{- end -}}
+{{- else -}}
+{{- /* ===== C. KUSUS KACA LOOP LIST (Posts / Categories / Nama Kategori) (POSITION 2) ===== */ -}}
+{{- if ne .IsHome true -}}
+<li itemprop='itemListElement' itemscope='itemscope' itemtype='https://schema.org/ListItem'><link itemprop="item" href="{{ .Permalink }}"><span itemprop="name">{{ .Title }}</span><meta itemprop="position" content="2"></li>
+{{- end -}}
+{{- end -}}
+</ul></nav>

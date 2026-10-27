@@ -1,0 +1,48 @@
+{{- $pag := $.Paginator -}}
+{{- if gt $pag.TotalPages 1 -}}
+    {{- $page2Url := "" -}}
+    {{- range $pag.Pagers -}}
+        {{- if eq .PageNumber 2 -}}
+            {{- $page2Url = .URL -}}
+        {{- end -}}
+    {{- end -}}
+<nav class="pagination" data-total="{{ $pag.TotalPages }}" data-first-url="{{ $pag.First.URL }}" data-format-url="{{ $page2Url }}"><a class="page-link {{ if not $pag.Prev }}disabled{{ end }}" {{ if $pag.Prev }} href="{{ $pag.Prev.URL }}" aria-label="Previous page" {{ end }} {{ if not $pag.Prev }} aria-disabled="true" {{ end }}><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 6l-6 6 6 6"></path></svg></a>
+        {{- $curr := $pag.PageNumber -}}
+        {{- $total := $pag.TotalPages -}}
+        {{- $middleMinPage := 2 -}}
+        {{- $middleMaxPage := sub $total 1 -}}
+        {{- $start := $middleMinPage -}}
+        {{- $end := $middleMaxPage -}}
+        {{- if gt $total 5 -}}
+            {{- $start = sub $curr 1 -}}
+            {{- if lt $start $middleMinPage -}}
+                {{- $start = $middleMinPage -}}
+            {{- end -}}
+            {{- $end = add $start 2 -}}
+            {{- if gt $end $middleMaxPage -}}
+                {{- $end = $middleMaxPage -}}
+                {{- $start = sub $end 2 -}}
+            {{- end -}}
+        {{- end -}}
+<a class="page-link {{ if eq $curr 1 }}current{{ end }}" {{ if eq $curr 1 }} aria-current="page" {{ end }} {{ if ne $curr 1 }} href="{{ $pag.First.URL }}" {{ end }}>1</a>
+{{- if gt $start $middleMinPage -}}
+<button type="button" class="page-link pagination-link pagination-jump-trigger" aria-label="{{ i18n "pagination.jumpToPage" | default "Jump to page" }}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-dots"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M5 12m-1 0a1 1 0 102 0 1 1 0 10-2 0"></path><path d="M12 12m-1 0a1 1 0 102 0 1 1 0 10-2 0"></path><path d="M19 12m-1 0a1 1 0 102 0 1 1 0 10-2 0"></path></svg></button>
+{{- end -}}
+        {{- range $pag.Pagers -}}
+            {{- if and (ge .PageNumber $start) (le .PageNumber $end) -}}
+                {{- $hideOnMobile := and (ne .PageNumber $curr) (ne .PageNumber (sub $curr 1)) (ne .PageNumber (add $curr 1)) -}}
+<a class="page-link {{ if eq .PageNumber $curr }}current{{ end }} {{ if $hideOnMobile }}hide-on-mobile{{ end }}" {{ if eq .PageNumber $curr }} aria-current="page" {{ end -}} href="{{ .URL }}" aria-label="Page {{ .PageNumber }}">
+{{- .PageNumber -}}
+</a>
+            {{- end -}}
+        {{- end -}}
+{{- if lt $end $middleMaxPage -}}
+<button type="button" class="page-link pagination-link pagination-jump-trigger" aria-label="{{ i18n "pagination.jumpToPage" | default "Jump to page" }}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-dots"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M5 12m-1 0a1 1 0 102 0 1 1 0 10-2 0"></path><path d="M12 12m-1 0a1 1 0 102 0 1 1 0 10-2 0"></path><path d="M19 12m-1 0a1 1 0 102 0 1 1 0 10-2 0"></path></svg></button>
+{{- end -}}
+<a class="page-link {{ if eq $curr $total }}current{{ end }}" {{ if ne $curr $total }} href="{{ $pag.Last.URL }}" {{ end }} aria-label="Page {{ $total }}" {{ if eq $curr $total }} aria-current="page" {{ end }}>
+{{- $total -}}
+</a>
+{{- /* TOTAL AKHIR */ -}} 
+<a class="page-link {{ if not $pag.Next }}disabled{{ end }}" {{ if $pag.Next }} href="{{ $pag.Next.URL }}" aria-label="Next page" {{ end }} {{ if not $pag.Next }} aria-disabled="true" {{ end }}><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 6l6 6-6 6"></path></svg></a>
+</nav>
+{{- end -}}

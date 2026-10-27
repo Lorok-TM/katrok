@@ -1,0 +1,35 @@
+{{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>\n<?xml-stylesheet type=\"text/xsl\" href=\"/sitemap-rss-style.xsl\"?>" | safeHTML -}}
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Sitemap RSS - {{ .Site.Title }}</title>
+    <link>{{ .Permalink }}</link>
+    <description>Sitemap RSS Terbaru for {{ .Site.Title }}</description>
+    <generator>Lorok™</generator>
+    <language>{{ .Site.Language.Locale | default "id-ID" }}</language>
+    {{- with .OutputFormats.Get "SITEMAPRSS" }}
+    {{ printf "<atom:link href=%q rel=\"self\" type=%q />" .Permalink .MediaType.Type | safeHTML }}
+    {{- end -}}
+{{- /* 1. Gawe slice/wadah kosong dhisik kanggo ngumpulno kabeh halaman */ -}}
+{{- $kabehHalaman := slice -}}
+{{- /* 2. Looping per situs/bahasa, trus jupuk halaman sing tipe'ne "page" */ -}}
+{{- range hugo.Sites -}}
+{{- range where .Pages "Kind" "page" -}}
+{{- $kabehHalaman = $kabehHalaman | collections.Append . -}}
+{{- end -}}
+{{- end -}}
+{{- /* 3. Urutno kabeh halaman sing wis kekumpul, trus tampilno 50 sing terbaru */ -}}
+{{ range first 50 ($kabehHalaman.ByDate.Reverse) }}
+    {{- if not .Params.private }}
+    <item>
+      <title>{{ .Title }}</title>
+      <link>{{ .Permalink }}</link>
+      <pubDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" }}</pubDate>
+      <guid>{{ .Permalink }}</guid>
+      {{- with .Description }}
+      <description>{{ . }}</description>
+      {{- end }}
+    </item>
+    {{- end }}
+    {{- end }}
+  </channel>
+</rss>

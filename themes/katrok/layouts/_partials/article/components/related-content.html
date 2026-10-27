@@ -1,0 +1,11 @@
+{{ $related := (.Site.RegularPages.Related .) | first 5 }}
+{{ with $related }}
+<aside class="related-post">
+<h2 class="title">Related Songs</h2>
+<ul>
+            {{ range . }}
+                {{ partial "article-list/tile" . }}
+            {{ end }}
+</ul>
+</aside>
+{{ end }}

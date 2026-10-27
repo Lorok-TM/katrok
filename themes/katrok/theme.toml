@@ -1,0 +1,6 @@
+name        = "Hugo Stack"
+description = "Minimalist theme"
+
+[author]
+    name     = "Katrok"
+    homepage = "https://expose.vercel.app"

@@ -1,0 +1,70 @@
+{{- $title := partialCached "data/title" . .RelPermalink -}}
+{{- $description := partialCached "data/description" . .RelPermalink -}}
+
+{{- /* =====META OG FACEBOOK===== */ -}}
+{{- if .IsHome -}}
+<meta property="og:title" {{ printf "content=\"%s - Konten Terlengkap dan Terbaru\"" $title | safeHTMLAttr }}>
+{{- else if and .IsPage (strings.HasSuffix .RelPermalink "/author/katrok/") -}}
+<meta property="og:title" {{ printf "content=\"Author Name: %s - %s\"" $title .Site.Title | safeHTMLAttr }}>
+{{- else if eq .Layout "archives" -}}
+<meta property="og:title" {{ printf "content=\"%s - %s\"" $title .Site.Title | safeHTMLAttr }}>
+{{- else if and .IsPage (ne .Section "page") -}}
+<meta property="og:title" {{ printf "content=\"%s\"" ($title | plainify | replaceRE "\n" " " | replaceRE "\r" " ") | safeHTMLAttr }}>
+{{- else if eq .Kind "taxonomy" -}}
+<meta property="og:title" {{ printf "content=\"List %s - %s\"" $title .Site.Title | safeHTMLAttr }}>
+{{- else if eq .Kind "term" -}}
+<meta property="og:title" {{ printf "content=\"Kumpulan artikel %s - %s\"" $title .Site.Title | safeHTMLAttr }}>
+{{- else if not .Page.IsPage -}}
+<meta property="og:title" {{ printf "content=\"List %s - %s\"" $title .Site.Title | safeHTMLAttr }}>
+{{- else if .Page.IsPage -}}
+<meta property="og:title" {{ printf "content=\"%s - %s\"" $title .Site.Title | safeHTMLAttr }}>
+{{- else if eq .Kind "section" -}}
+<meta property="og:title" {{ printf "content=\"Arsip Artikel %s - %s\"" $title .Site.Title | safeHTMLAttr }}>
+{{- else -}}
+<meta property="og:title" {{ printf "content=%q" $title | safeHTMLAttr }}>
+{{- end -}}
+
+{{- if eq .Kind "term" -}}
+<meta property="og:description" content={{ printf "Kumpulan artikel %s lengkap di %s, mulai dari yang terbaru hingga yang lama. Untuk selengkapnya kunjungi disini." $title .Site.Title | safeHTMLAttr }}>
+{{- else -}}
+<meta property="og:description" {{ printf "content=\"%s\"" ($description | plainify | replaceRE "\n" " " | replaceRE "\r" " " | truncate 155 "...") | safeHTMLAttr }}>
+{{- end -}}
+
+<meta property='og:url' content='{{ .Permalink }}'><meta property='og:site_name' content='{{ .Site.Title }}'><meta property='og:type' content='
+{{- if .IsPage -}}
+article
+{{- else -}}
+website
+{{- end -}}
+'>
+
+{{- with .Params.locale -}}
+<meta property='og:locale' content='{{ . }}'>
+{{- end -}}
+
+{{- if .IsPage -}}
+<meta property='article:section' content='{{ .Section | title }}'>
+{{- range .Params.tags -}}
+<meta property='article:tag' content='{{ . }}'>
+{{- end -}}
+{{- end -}}
+
+{{- if .IsPage -}}
+{{- if not .Date.IsZero -}}
+<meta property='article:published_time' content='{{ .Date.Format "2006-01-02T15:04:05-07:00" | safeHTML }}'>
+{{- end -}}
+{{- if not .Lastmod.IsZero -}}
+<meta property='article:modified_time' content='{{ .Lastmod.Format "2006-01-02T15:04:05-07:00" | safeHTML }}'>
+{{- end -}}
+{{- else -}}
+{{- if not .Site.Lastmod.IsZero -}}
+<meta property='og:updated_time' content='{{ .Site.Lastmod.Format " 2006-01-02T15:04:05-07:00 " | safeHTML }}'>
+{{- end -}}
+{{- end -}}
+
+{{- $image := partial "helper/image" (dict "Image" .Params.image "Resources" .Resources "Context" .) -}}
+{{- if $image -}}
+<meta property='og:image' content='{{ absURL $image.Permalink }}'>
+{{- else -}}
+<meta property='og:image' content='#'>
+{{- end -}}

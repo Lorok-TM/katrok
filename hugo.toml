@@ -1,0 +1,102 @@
+baseURL = "http://localhost:1313/"
+locale = "id"
+title = "Katrok"
+theme = "katrok"
+disableHugoGeneratorInject = true
+
+[permalinks]
+  post = "/:slug/"
+
+[[menu.main]]
+  name = "Author"
+  pageRef = "/author/"
+  weight = 20
+
+[[menu.main]]
+  name = "Category"
+  pageRef = "/categories/"
+  weight = 20
+
+[[menu.main]]
+  name = "Pages"
+  pageRef = "/page/"
+  weight = 20
+
+[[menu.main]]
+  name = "Posts"
+  pageRef = "/post/"
+  weight = 20
+
+[[menu.main]]
+  name = "Archive"
+  pageRef = "/archives/"
+  weight = 50
+
+[related]
+  includeNewer = false
+  threshold = 80
+  toLower = true
+[[related.indices]]
+  name = "categories"
+  weight = 100
+[[related.indices]]
+  name = "tags"
+  weight = 80
+  
+[params]
+  description = "Deskripsi situs."
+  author = "Katrok"
+  showRelated = true
+  relatedLimit = 3
+  
+[params.homepage]
+  layout = "page"
+  showRecent = true
+  recentLimit = 5
+  showRecentHeader = true
+  showFeatured = true
+  featuredLimit = 5 
+  showFeaturedHeader = true
+
+[sitemap]
+  changefreq = 'weekly'
+  priority = 0.5
+
+disableKinds = ["RSS"]
+
+[outputs]
+  home = ["HTML", "SITEMAPRSS", "NewsSitemap", "LinkScanner"]
+  page = ["HTML"]
+  section = ["HTML"]
+
+[mediaTypes]
+  [mediaTypes."application/rss+xml"]
+    suffixes = ["rss"]
+
+[outputFormats]
+  [outputFormats.SITEMAPRSS]
+    mediaType = "application/rss+xml"
+    baseName = "sitemap"
+    isHTML = false
+    isFeed = true
+
+[outputFormats.LinkScanner]
+  mediaType = "application/json"
+  baseName = "link-report"
+  isHTML = false
+
+[outputFormats.NewsSitemap]
+  mediaType = "application/xml"
+  baseName = "sitemap-news"
+  isHTML = false
+  isPlainText = false
+
+[minify]
+  minifyOutput = true
+
+[minify.tdewolff.html]
+    keepQuotes = true
+
+[security]
+  [security.http]
+    urls = []

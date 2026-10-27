@@ -1,0 +1,35 @@
+{{- define "main" -}}
+{{- partial "breadcrumbs.html" . -}}
+<div class="ast-row">
+<header class="page-header">
+<h2 class="page-title">{{ .Title }}</h2>
+<span class="count">{{ T "list.page" (len .Pages) }}</span>
+</header>
+    {{- $pages := partial "helper/pages.html" . -}}
+    {{- $subsections := .Sections -}}
+    {{- if and (eq (len $pages) (len $subsections)) (eq $pages $subsections) -}}
+        {{- $subsections = slice -}}
+    {{- end -}}
+    {{- with $subsections -}}
+        <div>
+            <h2 class="section-title">{{ T "list.subsection" (len $subsections) }}</h2>
+            <div class="subsection-list">
+                <div class="article-list--tile">
+                    {{ range . }}
+                        {{ partial "article-list/tile" . }}
+                    {{ end }}
+                </div>
+            </div>
+        </div>
+    {{- end -}}
+{{- $paginator := partial "helper/paginator.html" . -}}
+{{- with $paginator -}}
+<ul>
+{{- range .Pages -}}
+{{- partial "article-list/compact" . -}}
+{{- end -}}
+</ul>
+{{- end -}}
+</div>
+{{- partial "pagination.html" . -}}
+{{- end -}}

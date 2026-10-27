@@ -1,0 +1,4 @@
+{{ $image := partial "helper/image" (dict "Image" .Params.image "Resources" .Resources "Context" .) }}
+<article class="post hentry" itemtype="https://schema.org/CreativeWork" itemscope="itemscope">
+    {{ partial "article/components/header" (dict "Page" . "IsList" true) }}
+</article>

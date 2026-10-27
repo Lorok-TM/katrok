@@ -1,0 +1,59 @@
+<meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1'>
+
+{{- $title := partial "data/title" . -}}
+<title>
+{{- if .IsHome -}}
+{{ .Site.Title }} - Konten Terlengkap dan Terbaru
+{{- else if and .IsPage (strings.HasSuffix .RelPermalink "/author/katrok/") -}}
+Author Name: {{ $title }} - {{ .Site.Title }}
+{{- else if eq .Layout "archives" -}}
+{{ $title }} - {{ .Site.Title }} 
+{{- else if and .IsPage (ne .Section "page") -}}
+{{ $title }}
+{{- else if and .IsPage (eq .Section "page") -}}
+Page {{ $title }} - {{ .Site.Title }}
+{{- else if eq .Kind "term" -}}
+Kumpulan artikel {{ $title }} - {{ .Site.Title }}
+{{- else -}}
+List {{ $title }} - {{ .Site.Title }}
+{{- end -}}
+</title>
+
+{{- $description := partialCached "data/description" . .RelPermalink -}}
+{{- if eq .Kind "term" -}}
+<meta name="description" content={{ printf "Kumpulan artikel %s lengkap di %s, mulai dari yang terbaru hingga yang lama. Untuk selengkapnya kunjungi disini." $title .Site.Title | safeHTMLAttr }}>
+{{- else -}}
+<meta name="description" {{ printf "content=\"%s\"" ($description | plainify | replaceRE "\n" " " | replaceRE "\r" " " | truncate 155 "...") | safeHTMLAttr }}>
+{{- end -}}
+
+{{- with .Params.Keywords -}}
+<meta name="keywords" content="{{ delimit . ", " }}">
+{{- end -}}
+
+{{- with .Params.canonicalUrl -}}
+<link rel="canonical" href="{{ . }}">
+{{- else -}}
+<link rel="canonical" href="{{ .Permalink }}">
+{{- end -}}
+
+{{- partial "head/custom-font.html" . -}}
+{{- partial "head/style.html" . -}}
+{{- partial "head/script.html" . -}}
+{{- partial "head/opengraph/include.html" . -}}
+
+{{- range .AlternativeOutputFormats -}}
+<link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" href="{{ .Permalink | safeURL }}">
+{{- end -}}
+
+{{- $favicon := partial "helper/image" (dict "Image" .Site.Params.favicon "Resources" resources "Context" .) -}}
+{{- with $favicon -}}
+<link rel="shortcut icon" href="{{ .Permalink }}">
+{{- end -}}
+
+{{- if .Site.Params.cookies.enabled -}}
+    {{- partial "cookies/analytics.html" . -}}
+{{- else -}}
+    {{- template "_internal/google_analytics.html" . -}}
+{{- end -}}
+
+{{- partial "head/custom.html" . -}}

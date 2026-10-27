@@ -1,0 +1,87 @@
+{{- $IsList := .IsList -}}
+{{- $Page := .Page -}}
+
+{{- if $IsList -}}
+{{- if $Page.Params.categories -}}
+<div class="category">
+{{- range ($Page.GetTerms "categories") -}}
+{{- $color := partial "helper/color-from-str" .LinkTitle -}}
+{{- $BackgroundColor := default $color.BackgroundColor .Params.style.background -}}
+{{- $TextColor := default $color.TextColor .Params.style.color -}}
+<a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+{{- end -}}
+</div>
+{{- end -}}
+{{- end -}}
+
+{{- if not $IsList -}}
+{{- /* --- KONDISI SINGLE (DUDU LIST) --- */ -}}
+{{- if eq $Page.Section "post" -}}
+{{- /* 1. MURNI NGGO POST SINGLE */ -}}
+<h1 class='post-title entry-title'>{{ $Page.Title }}</h1>
+{{- else if eq $Page.Section "page" -}}
+{{- /* 2. MURNI NGGO PAGE SINGLE */ -}}
+<h1 class='post-title entry-title'>{{ $Page.Title }}</h1>
+{{- end -}}
+{{- else -}}
+{{- /* --- 3. KONDISI LIST (HOMEPAGE / ARCHIVE / TAXONOMY) --- */ -}}
+<h2 class="post-title entry-title"><a href="{{ $Page.RelPermalink }}" rel="bookmark">{{ $Page.Title }}</a></h2>
+{{- end -}}
+
+{{- if or $IsList (eq $Page.Section "post") -}}
+
+{{- /* 
+      KODE NENG KENE BAKAL METU YEN:
+      1. Kahanane lagi wujud LOOP LIST 
+      utawa
+      2. Kahanane lagi neng njero SINGLE POSTINGAN (lirik lagu)
+*/ -}}
+
+{{- $showReadingTime := $Page.Params.readingTime | default ($Page.Site.Params.article.readingTime) -}}
+{{- $showDate := not $Page.Date.IsZero -}}
+{{- $showTime := or $showDate $showReadingTime -}}
+{{- $showTranslations := $Page.IsTranslated -}}
+{{- $showTags := and $Page.Site.Params.Article.List.ShowTags ($Page.GetTerms "tags") $IsList -}}
+    
+{{- if or $showTime $showTranslations $showTags -}}
+<div class="entry-meta">
+<span class="posted-by author vcard">By <a href="/author/katrok/" rel="author" class="url fn n">Katrok</a></span> / 
+{{ if $showTime }}
+<span class="posted-on">
+{{- if $showDate -}}
+{{- /* partial "helper/icon" "date" */ -}}
+<time class='published' datetime='{{ $Page.Date.Format "2006-01-02T15:04:05Z07:00" }}'>
+{{- $Page.Date | time.Format $Page.Site.Params.dateFormat.published -}}
+</time>
+{{- end -}}
+{{- /*
+{{ if $showReadingTime }}
+<time class="article-time--reading">
+{{ T "article.readingTime" $Page.ReadingTime }}
+</time>
+{{- end -}}
+*/ -}}
+</span>
+{{- end -}}
+
+{{- if $showTranslations -}}
+<div class="inline-meta">
+{{- partial "helper/icon" "language" -}}
+{{- range $Page.Translations -}}
+<a href="{{ .RelPermalink }}" class="link">{{ .Language.Label }}</a>
+{{- end -}}
+</div>
+{{- end -}}
+
+{{- if $showTags -}}
+<div class="article-tags inline-meta">
+{{- partial "helper/icon" "tag" -}}
+{{- range ($Page.GetTerms "tags") -}}
+<a href="{{ .RelPermalink }}" class="link">{{ .LinkTitle }}</a>
+{{- end -}}
+</div>
+{{- end -}}
+</div>
+{{- end -}}
+
+{{- end -}}

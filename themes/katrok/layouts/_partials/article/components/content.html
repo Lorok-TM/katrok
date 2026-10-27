@@ -1,0 +1,26 @@
+<div class="entry-content">
+{{- /* Refer to https://discourse.gohugo.io/t/responsive-tables-in-markdown/10639/5 */ -}}
+
+{{- $w := printf "<div class=\"table-wrapper\">${1}</div>" -}}
+{{- $c := .Content | replaceRE "(<table>(?:.|\n)+?</table>)" $w -}}
+{{- $c = $c | replaceRE "(</p>)\\s+(<p>)" "${1}${2}" -}}
+{{- $c = $c | replaceRE "(<br\\s*/?>)\\s+" "${1}" -}}
+{{- trim $c "\n\r " | safeHTML -}}
+
+{{- /*
+{{- if and .IsPage (ne .Section "page") -}}
+{{- partial "baca-juga.html" . -}}
+{{- end -}}
+ */ -}}
+
+</div>
+
+{{- /* =================BAR br ISIH NGANJOK
+{{- $w:=printf "<div class=\"table-wrapper\">${1}</div>" -}}
+{{- trim (.Content|replaceRE "(<table>(?:.|\n)+?</table>)" $w|replaceRE "(</p>)\\s+(<p>)" "${1}${2}") "\n\r " | safeHTML -}}
+ */ -}}
+
+{{- /* =================STANDAR DURUNG MINIFI MUMPETO KOWE YO
+{{- $wrappedTable := printf "<div class=\"table-wrapper\">${1}</div>" -}}
+{{- .Content | replaceRE "(<table>(?:.|\n)+?</table>)" $wrappedTable | safeHTML -}}
+ */ -}}

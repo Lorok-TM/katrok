@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Blogging on Katrok</title>
+        <link>http://localhost:1313/categories/blogging/</link>
+        <description>Recent content in Blogging on Katrok</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>id</language>
+        <lastBuildDate>Mon, 26 Oct 2026 15:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/categories/blogging/index.xml" rel="self" type="application/rss+xml" /><item>
+            <title>Tulisan Kedua Tes Featured</title>
+            <link>http://localhost:1313/posts/tulisan-kedua-tes-featured/</link>
+            <pubDate>Mon, 26 Oct 2026 15:00:00 +0000</pubDate>
+            <guid>http://localhost:1313/posts/tulisan-kedua-tes-featured/</guid>
+            <description>&lt;p&gt;Kondisi featured true nongol di homepage seharusnya gak ngikut di recents post sini, tapi ditempatnya dia sendiri.&lt;/p&gt;&#xA;</description>
+        </item></channel>
+</rss>

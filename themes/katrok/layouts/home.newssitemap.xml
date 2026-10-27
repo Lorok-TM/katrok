@@ -1,0 +1,56 @@
+{{- $pages := partial "helper/pages.html" . -}}
+
+{{- /* Saringan 48 jam sing bener kanggo Hugo */ -}}
+{{- $newsPages := slice -}}
+{{- $wongsoSaiki := now.Unix -}}
+{{- $patangPuluhWoluJam := mul 48 3600 -}} {{- /* 48 jam didadekne hitungan detik */ -}}
+{{- $cutoffUnix := sub $wongsoSaiki $patangPuluhWoluJam -}}
+
+{{- range $pages -}}
+    {{- if ge .PublishDate.Unix $cutoffUnix -}}
+        {{- $newsPages = $newsPages | append . -}}
+    {{- end -}}
+{{- end -}}
+
+{{- /* Tetep nganggo limit RSS bawaan */ -}}
+{{- $limit := .Site.Config.Services.RSS.Limit -}}
+{{- if ge $limit 1 -}}
+    {{- $newsPages = $newsPages | first $limit -}}
+{{- end -}}
+
+{{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>\n<?xml-stylesheet type=\"text/xsl\" href=\"/sitemap-news-style.xsl\"?>" | safeHTML -}}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+{{- range $newsPages -}}
+
+    <url>
+        <loc>{{ .Permalink }}</loc>
+        <news:news>
+            <news:publication>
+                <news:name>{{ $.Site.Title }}</news:name>
+                <news:language>{{ site.Language.Locale | default "id" }}</news:language>
+            </news:publication>
+            <news:publication_date>{{ .PublishDate.Format "2006-01-02T15:04:05-07:00" }}</news:publication_date>
+            <news:title>{{ .Title }}</news:title>
+        </news:news>
+        {{- /* Proses Gambar Dinamis + Gambar Cadangan */ -}}
+        {{- $image := partial "helper/image" (dict "Image" .Params.image "Resources" .Resources "Context" .) -}}
+        {{- $imageUrl := "" -}}
+        
+        {{- if $image -}}
+            {{- /* Yen artikel ana gambare, nganggo gambar kuwi */ -}}
+            {{- $imageUrl = $image.Permalink | absURL -}}
+        {{- else -}}
+            {{- /* Kene panggonan gambar cadangan/default yen artikel kosongan (Ganti jeneng file-e yen beda) */ -}}
+            {{- $imageUrl = "https://expose.vercel.app/image/best-lirik-lagu.webp" | absURL -}}
+        {{- end -}}
+        
+        <image:image>
+            <image:loc>{{ $imageUrl }}</image:loc>
+            <image:title>{{ .Title }}</image:title>
+        </image:image>
+    </url>
+    {{- end -}}
+</urlset>

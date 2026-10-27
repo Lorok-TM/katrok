@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet type="text/xsl" href="/sitemap-rss-style.xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Sitemap RSS - Katrok</title>
+    <link>http://localhost:1313/</link>
+    <description>Sitemap RSS Terbaru for Katrok</description>
+    <generator>Lorok™</generator>
+    <language>id</language>
+    <atom:link href="http://localhost:1313/sitemap.rss" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Tulisan Pertama</title>
+      <link>http://localhost:1313/posts/tulisan-pertama/</link>
+      <pubDate>Mon, 26 Oct 2026 15:00:00 &#43;0000</pubDate>
+      <guid>http://localhost:1313/posts/tulisan-pertama/</guid>
+      <description>Ini adalah deskripsi singkat untuk post tulisan pertama.</description>
+    </item>
+    <item>
+      <title>Tulisan Kedua Tes Featured</title>
+      <link>http://localhost:1313/posts/tulisan-kedua-tes-featured/</link>
+      <pubDate>Mon, 26 Oct 2026 15:00:00 &#43;0000</pubDate>
+      <guid>http://localhost:1313/posts/tulisan-kedua-tes-featured/</guid>
+    </item>
+    <item>
+      <title>Katrok</title>
+      <link>http://localhost:1313/author/katrok/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
+      <guid>http://localhost:1313/author/katrok/</guid>
+      <description>Penulis di situs expose.</description>
+    </item>
+    <item>
+      <title>Contact</title>
+      <link>http://localhost:1313/page/contact/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
+      <guid>http://localhost:1313/page/contact/</guid>
+      <description>Contact Expose. Anda bisa memberikan kritik dan saran langsung hubungi kami melalui halaman kontak disini.</description>
+    </item>
+    <item>
+      <title>Arsip Artikel</title>
+      <link>http://localhost:1313/archives/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
+      <guid>http://localhost:1313/archives/</guid>
+      <description>Menampilkan daftar seluruh isi konten di situs expose, mulai dari yang terbaru sampai yang paling lama.</description>
+    </item>
+    <item>
+      <title>About</title>
+      <link>http://localhost:1313/page/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
+      <guid>http://localhost:1313/page/about/</guid>
+      <description>Tentang situs expose.</description>
+    </item>
+  </channel>
+</rss>
