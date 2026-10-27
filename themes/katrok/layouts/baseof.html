@@ -147,9 +147,37 @@ body{background-color:var(--bg-basic-node)}
 .bg-img,.hero-cover{background-color:rgb(155 155 155/.1);background-size:cover;background-position:center;background-repeat:no-repeat}
 .hero-cover{aspect-ratio:16/3}
 
+{{- /* Gaya Tombol NOTIF PWA INSTAL or CLOSE */ -}}
+#pwa-combo-container{position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;align-items:center;gap:8px}
+.pwa-btn{display:flex;align-items:center;gap:6px;background:linear-gradient(135deg,#007bff,#0056b3);color:#fff;border:none;padding:6px 12px;border-radius:50px;font-family:system-ui,-apple-system,sans-serif;font-weight:600;font-size:15px;box-shadow:0 4px 15px rgb(0 123 255/.4);cursor:pointer;transition:box-shadow .2s ease;animation:pwaPulse 2s infinite}
+.pwa-btn:hover{box-shadow:0 6px 20px rgb(0 123 255/.6);background:linear-gradient(135deg,#0056b3,#004085)}
+.pwa-btn:active{box-shadow:0 2px 10px rgb(0 123 255/.4)}
+.pwa-icon{font-size:18px;display:inline-block;animation:pwaWobble 4s infinite ease-in-out}
+.pwa-notif-btn{background:#065fd4;color:#fff;border:none;width:36px;height:36px;border-radius:50px;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow: 0 4px 12px rgb(6 95 212/.3);transition:all .2s ease}
+.pwa-notif-btn:hover{background:#054ea6}
+.pwa-close-btn{background:#fff;color:#000;width:36px;height:36px;border:none;border-radius:50px;font-size:16px;font-weight:bold;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px rgb(0 0 0/.1);transition: all 0.2s ease}
+.pwa-close-btn:hover{background:#e2e6ea}
+@keyframes pwaPulse{ 0% {box-shadow: 0 0 0 0 rgb(0 123 255/.7)} 70% {box-shadow: 0 0 0 12px rgb(0 123 255/0)} 100% {box-shadow: 0 0 0 0 rgb(0 123 255/0)}}
+@keyframes pwaWobble{ 0%, 100% {transform: rotate(0deg)} 85% {transform: rotate(0deg)} 90% {transform:rotate(-15deg)} 95% {transform:rotate(15deg)}}
+@media (max-width:480px) {#pwa-combo-container{bottom:15px;right:15px}}
+
 </style>
 
 <script>document.addEventListener("DOMContentLoaded", () => { const t = localStorage.getItem('theme'), chk = document.getElementById('dark-toggle'), isDark = t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme:dark)').matches); if (chk) { chk.checked = isDark; chk.addEventListener('change', () => localStorage.setItem('theme', chk.checked ? 'dark' : 'light'));}});</script>
+
+<script>
+if ('serviceWorker' in navigator) { 
+  window.addEventListener('load', function() { 
+    navigator.serviceWorker.register('/sw.js') 
+      .then(function(registration) { 
+        console.log('PWA ServiceWorker sukses didaftarkan di scope: ', registration.scope);
+      }) 
+      .catch(function(err) { 
+        console.log('PWA ServiceWorker gagal didaftarkan: ', err); 
+      }); 
+  }); 
+}
+</script>
 
 </head>
 <body itemtype='https://schema.org/Blog' itemscope='itemscope'>
@@ -205,6 +233,96 @@ var share=document.createElement("script");share.defer = true;share.type="text/j
                                                                         
 console.log("Script munyuk Aktif!");};["mousemove", "mousedown", "touchstart", "scroll", "pointermove", "keydown", "click"].forEach(e => {window.addEventListener(e, munyuk, { passive: true });});timerMunyuk = setTimeout(munyuk, 4000);
 
+</script>
+<div id="pwa-combo-container" style="display: none;">
+<button id="pwa-install-btn" class="pwa-btn" style="display: none;"><span class="pwa-icon">📲</span><span class="pwa-text">Install Best Lyrics</span></button><button id="pwa-notif-btn" class="pwa-notif-btn" style="display: none;" title="Aktifkan Notifikasi">🔔</button><button id="pwa-close-btn" class="pwa-close-btn" aria-label="Close">&times;</button>
+</div>
+<script>
+  let deferredPrompt;
+  const comboContainer = document.getElementById('pwa-combo-container');
+  const installBtn = document.getElementById('pwa-install-btn');
+  const notifBtn = document.getElementById('pwa-notif-btn');
+  const closeBtn = document.getElementById('pwa-close-btn');
+  let PwaSiapInstal = false;
+  let NotifSiapMinta = false;
+  if ("Notification" in window) {
+    if (Notification.permission === "default") {
+      NotifSiapMinta = true;
+    }
+  }
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    PwaSiapInstal = true;
+    console.log("Situs siap diinstal.");
+    evaluasiTampilanWadah();
+  });
+  document.addEventListener("DOMContentLoaded", () => {
+    evaluasiTampilanWadah();
+  });
+  function evaluasiTampilanWadah() {
+    const isDismissed = sessionStorage.getItem('pwa-combo-dismissed');
+    if (isDismissed) return;
+    let kuduNongol = false;
+    if (PwaSiapInstal && installBtn) {
+      installBtn.style.display = 'flex';
+      kuduNongol = true;
+    } else if (installBtn) {
+      installBtn.style.display = 'none';
+    }
+    if (NotifSiapMinta && notifBtn) {
+      notifBtn.style.display = 'flex';
+      kuduNongol = true;
+    } else if (notifBtn) {
+      notifBtn.style.display = 'none';
+    }
+    if (kuduNongol && comboContainer) {
+      comboContainer.style.display = 'flex';
+    } else if (comboContainer) {
+      comboContainer.style.display = 'none';
+    }
+  }
+  if (installBtn) {
+    installBtn.addEventListener('click', async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      console.log(`Pilihan instalasi: ${outcome}`);
+      deferredPrompt = null;
+      PwaSiapInstal = false;
+      evaluasiTampilanWadah();
+    });
+  }
+  if (notifBtn) {
+    notifBtn.addEventListener('click', () => {
+      if (!("Notification" in window)) return;
+      Notification.requestPermission().then(permission => {
+        if (permission === "granted") {
+          alert("Terima Kasih, notifikasi sudah aktif, bro!");
+          navigator.serviceWorker.ready.then(reg => {
+            console.log("Service Worker siap untuk push");
+          });
+        } else if (permission === "denied") {
+          alert("Ijin ditolak. Jika ingin mengaktifkan, harus lewat setelan gembok browser, bro.");
+        }
+        NotifSiapMinta = false;
+        evaluasiTampilanWadah();
+      });
+    });
+  }
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => {
+      if (comboContainer) {
+        comboContainer.style.display = 'none';
+        sessionStorage.setItem('pwa-combo-dismissed', 'true');
+        console.log('User menutup menu akselerasi PWA pada sesi ini.');
+      }
+    });
+  }
+  window.addEventListener('appinstalled', () => {
+    PwaSiapInstal = false;
+    evaluasiTampilanWadah();
+  });
 </script>
 </footer>
 </body>
