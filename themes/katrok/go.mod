@@ -1,3 +1,3 @@
-module expose
+module katrok
 
 go 1.17
