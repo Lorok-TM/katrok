@@ -29,13 +29,6 @@
       "headers": {
         "Location": "/"
       }
-    },
-    {
-      "src": "/offline/",
-      "status": 301,
-      "headers": {
-        "Location": "/offline.html"
-      }
     }
   ],
   "headers": [
