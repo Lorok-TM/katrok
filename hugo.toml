@@ -4,9 +4,6 @@ title = "Katrok"
 theme = "katrok"
 disableHugoGeneratorInject = true
 
-[permalinks]
-  post = "/:slug/"
-
 [[menu.main]]
   name = "Author"
   pageRef = "/author/"
@@ -100,3 +97,6 @@ disableKinds = ["RSS"]
 [security]
   [security.http]
     urls = []
+
+[permalinks]
+  posts = '/:slug/'
