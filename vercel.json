@@ -29,6 +29,12 @@
       "headers": {
         "Location": "/"
       }
+    },
+    {
+      "src": "/offline/",
+      "headers": {
+        "Location": "/offline.html"
+      }
     }
   ],
   "headers": [
