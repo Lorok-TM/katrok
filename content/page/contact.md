@@ -1,6 +1,6 @@
 ---
 title: Contact
-description: Contact Expose. Anda bisa memberikan kritik dan saran langsung hubungi kami melalui halaman kontak disini.
+description: Anda bisa memberikan kritik dan saran langsung hubungi kami melalui halaman kontak disini.
 slug: "contact"
 ---
 
