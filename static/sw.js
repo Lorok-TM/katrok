@@ -11,13 +11,11 @@ const ASSETS_TO_CACHE = [
   '/archives'
 ];
 
-// 1. Proses Install: Pre-cache asset utama kanthi bener (CORS biasa ben statuse 200)
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       return Promise.all(
         ASSETS_TO_CACHE.map((url) => {
-          // Ambil nganggo mode standar, yen gagal nembe di-log
           return fetch(url)
             .then((response) => {
               if (response.ok) {
@@ -33,7 +31,6 @@ self.addEventListener('install', (event) => {
   self.skipWaiting();
 });
 
-// 2. Proses Aktifasi: Resik-resik cache lawas
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) => {
@@ -44,12 +41,10 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// 3. Proses Fetch: Strategi Network First, Fallback to Cache/Offline
 self.addEventListener('fetch', (event) => {
   const requestUrl = new URL(event.request.url);
   
   if (requestUrl.origin === self.location.origin) {
-    // Khusus kanggo Navigasi Halaman HTML
     if (event.request.mode === 'navigate' || (event.request.method === 'GET' && event.request.headers.get('accept').includes('text/html'))) {
       event.respondWith(
         fetch(event.request)
@@ -63,14 +58,12 @@ self.addEventListener('fetch', (event) => {
             return networkResponse;
           })
           .catch(() => {
-            // Pas Offline: Goleki cache sing pas, nek ra ono langsung uncalno kaca '/offline'
             return caches.match(event.request, { ignoreSearch: true }).then((response) => {
               return response || caches.match('/offline') || caches.match('/');
             });
           })
       );
     } else {
-      // Kanggo Aset Liyane (CSS, JS, Gambar) - Cache First
       event.respondWith(
         caches.match(event.request, { ignoreSearch: true }).then((cachedResponse) => {
           return cachedResponse || fetch(event.request).then((netResp) => {
@@ -85,7 +78,6 @@ self.addEventListener('fetch', (event) => {
     }
   }
 });
-
 
 self.addEventListener('push', (event) => {
   let title = 'Kabar Terbaru, Bro!';
