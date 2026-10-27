@@ -5,7 +5,7 @@
 {{- if .IsHome -}}
 <meta property="og:title" {{ printf "content=\"%s - The site of Ndeso\"" $title | safeHTMLAttr }}>
 {{- else if and .IsPage (strings.HasSuffix .RelPermalink "/author/katrok/") -}}
-<meta property="og:title" {{ printf "content=\"Author Name: %s - %s\"" $title .Site.Title | safeHTMLAttr }}>
+<meta property="og:title" {{ printf "content=\"Author Name: %s\"" $title | safeHTMLAttr }}>
 {{- else if eq .Layout "archives" -}}
 <meta property="og:title" {{ printf "content=\"%s - %s\"" $title .Site.Title | safeHTMLAttr }}>
 {{- else if and .IsPage (ne .Section "page") -}}
