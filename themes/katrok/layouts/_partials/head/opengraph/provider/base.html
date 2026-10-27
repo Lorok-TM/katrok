@@ -3,7 +3,7 @@
 
 {{- /* =====META OG FACEBOOK===== */ -}}
 {{- if .IsHome -}}
-<meta property="og:title" {{ printf "content=\"%s - Konten Terlengkap dan Terbaru\"" $title | safeHTMLAttr }}>
+<meta property="og:title" {{ printf "content=\"%s - The site of Ndeso\"" $title | safeHTMLAttr }}>
 {{- else if and .IsPage (strings.HasSuffix .RelPermalink "/author/katrok/") -}}
 <meta property="og:title" {{ printf "content=\"Author Name: %s - %s\"" $title .Site.Title | safeHTMLAttr }}>
 {{- else if eq .Layout "archives" -}}
