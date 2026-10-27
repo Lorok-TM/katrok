@@ -13,8 +13,8 @@ const axios = require('axios');
 const { google } = require('googleapis');
 
 const contentDir = './content'; 
-const domain = "https://expose.vercel.app"; // GANTI nganggo domain TLD .com mu sesuk
-const mediamu = "Expose"; // GANTI nganggo jeneng mediamu
+const domain = "https://katrok.vercel.app"; // GANTI nganggo domain TLD .com mu sesuk
+const mediamu = "Katrok"; // GANTI nganggo jeneng mediamu
 
 let xmlEntries = '';
 let urlsToNotify = [];
@@ -41,7 +41,7 @@ function readDir(dir) {
             const slug = data.slug || path.basename(file, '.md');
             const permalink = `${domain}/${slug}/`;
             const formattedDate = postDate.toISOString();
-            const imgUrl = data.image || "https://expose.vercel.app/image/best-lirik-lagu.webp";
+            const imgUrl = data.image || "https://katrok.vercel.app/image/katrok.webp";
 
             urlsToNotify.push(permalink);
             xmlEntries += `  <url>
