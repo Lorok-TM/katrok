@@ -1,6 +1,6 @@
 ---
-title: "Profil Penulis"
-description: "Profil resmi Cah Katrok, kreator dan penulis utama di platform media digital Katrok."
+title: "Katrok"
+description: "Profil resmi Cah Katrok, seorang praktisi otodidak, kreator dan penulis utama di platform media digital Katrok."
 slug: "katrok"
 layout: "katrok"
 ---
