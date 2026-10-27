@@ -14,6 +14,13 @@
       "dest": "/offline.html"
     },
     {
+      "src": "/offline/",
+      "status": 301,
+      "headers": {
+        "Location": "/offline.html"
+      }
+    },
+    {
       "src": "/sitemap.rss",
       "headers": {
         "Content-Type": "application/xml; charset=utf-8"
@@ -28,12 +35,6 @@
       "status": 301,
       "headers": {
         "Location": "/"
-      }
-    },
-    {
-      "src": "/offline/",
-      "headers": {
-        "Location": "/offline.html"
       }
     }
   ],
