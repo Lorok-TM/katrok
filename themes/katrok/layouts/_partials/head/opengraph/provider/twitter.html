@@ -2,7 +2,7 @@
 {{- $description := partialCached "data/description" . .RelPermalink -}}
 
 {{- if .IsHome -}}
-<meta name="twitter:title" {{ printf "content=\"%s - Konten Terlengkap dan Terbaru\"" $title | safeHTMLAttr }}>
+<meta name="twitter:title" {{ printf "content=\"%s - The site of Ndeso\"" $title | safeHTMLAttr }}>
 {{- else if and .IsPage (strings.HasSuffix .RelPermalink "/author/katrok/") -}}
 <meta name="twitter:title" {{ printf "content=\"Author Name: %s - %s\"" $title .Site.Title | safeHTMLAttr }}>
 {{- else if eq .Layout "archives" -}}
@@ -42,6 +42,6 @@
 <meta name="twitter:site" content="@{{ . }}">
 <meta name="twitter:creator" content="@{{ . }}">
 {{- else -}}
-<meta name="twitter:site" content="@expose">
+<meta name="twitter:site" content="@katrok">
 <meta name="twitter:creator" content="@katrok">
 {{- end -}}
