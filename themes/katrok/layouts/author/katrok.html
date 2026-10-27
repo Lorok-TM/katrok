@@ -2,10 +2,12 @@
 {{- define "head" -}}
 {{- end -}}
 {{- define "main" -}}
-<div class="author"><h1>Katrok</h1><p>Name : Katrok Gembel Kere<br>WA / Call / Sms : 085203781053<br>Alamat : RT.01 RW.02 Bondalem, Hadiwarno, Ngadirojo 63572, Pacitan, Jawa Timur, Indonesia</p></div>
+<div class="author">
+<h1>Katrok</h1>
 {{- $w := printf "<div class=\"table-wrapper\">${1}</div>" -}}
 {{- $c := .Content | replaceRE "(<table>(?:.|\n)+?</table>)" $w -}}
 {{- $c = $c | replaceRE "(</p>)\\s+(<p>)" "${1}${2}" -}}
 {{- $c = $c | replaceRE "(<br\\s*/?>)\\s+" "${1}" -}}
 {{- trim $c "\n\r " | safeHTML -}}
 {{- end -}}
+</div>
