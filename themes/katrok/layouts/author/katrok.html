@@ -9,5 +9,5 @@
 {{- $c = $c | replaceRE "(</p>)\\s+(<p>)" "${1}${2}" -}}
 {{- $c = $c | replaceRE "(<br\\s*/?>)\\s+" "${1}" -}}
 {{- trim $c "\n\r " | safeHTML -}}
-{{- end -}}
 </div>
+{{- end -}}
