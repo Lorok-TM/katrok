@@ -1,6 +1,6 @@
-name        = "Hugo Stack"
+name        = "Katrok"
 description = "Minimalist theme"
 
 [author]
     name     = "Katrok"
-    homepage = "https://expose.vercel.app"
+    homepage = "https://katrok.vercel.app"
