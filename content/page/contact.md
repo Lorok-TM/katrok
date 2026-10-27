@@ -1,8 +1,10 @@
 ---
 title: Contact
-description: Anda bisa memberikan kritik dan saran langsung hubungi kami melalui halaman kontak disini.
+description: Kontak situs Katrok. Anda bisa memberikan kritik dan saran langsung hubungi kami melalui halaman kontak disini.
 slug: "contact"
 ---
+
+Anda bisa memberikan kritik dan saran langsung hubungi kami melalui kontak di bawah ini.
 
 Name : Katrok Gembel Kere  
 WA / Call / Sms : 085203781053  
