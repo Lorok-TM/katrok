@@ -1,18 +1,14 @@
 const CACHE_NAME = 'katrok-pwa-cache-v1';
 const ASSETS_TO_CACHE = [
   '/',
-  '/offline.html',
-  '/offline/',
-  '/offline/index.html',
+  '/offline',
   '/favicon.ico',
-  '/author/',
-  '/author/katrok/',
-  '/categories/',
-  '/page/',
-  '/page/about/',
-  '/page/contact/',
-  '/post/',
-  '/archives/'
+  '/author',
+  '/categories',
+  '/page/about',
+  '/page/contact',
+  '/post',
+  '/archives'
 ];
 
 self.addEventListener('install', (event) => {
