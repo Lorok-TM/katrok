@@ -5,7 +5,7 @@ theme = "katrok"
 disableHugoGeneratorInject = true
 
 [permalinks]
-  posts = "/:slug/"
+  post = "/:slug/"
 
 [[menu.main]]
   name = "Author"
