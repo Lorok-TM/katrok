@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://katrok.vercel.app/sitemap.rss
+Sitemap: https://katrok.vercel.app/sitemap.xml
+Sitemap: https://katrok.vercel.app/sitemap-news.xml
