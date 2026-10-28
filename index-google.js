@@ -53,6 +53,10 @@ function readDir(dir) {
       <news:publication_date>${formattedDate}</news:publication_date>
       <news:title>${data.title || "No Title"}</news:title>
     </news:news>
+    <image:image>
+      <image:loc>${imgUrl}</image:loc>
+      <image:title>${data.title || "No Title"}</image:title>
+    </image:image>
   </url>\n`;
           }
         }
