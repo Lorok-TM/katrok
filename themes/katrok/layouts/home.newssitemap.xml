@@ -43,8 +43,8 @@
             {{- /* Yen artikel ana gambare, nganggo gambar kuwi */ -}}
             {{- $imageUrl = $image.Permalink | absURL -}}
         {{- else -}}
-            {{- /* Kene panggonan gambar cadangan/default yen artikel kosongan (Ganti jeneng file-e yen beda) */ -}}
-            {{- $imageUrl = "https://expose.vercel.app/image/best-lirik-lagu.webp" | absURL -}}
+            {{- /* Kene panggonan gambar cadangan/default yen artikel kosongan */ -}}
+            {{- $imageUrl = "https://katrok.vercel.app/image/katrok.webp" | absURL -}}
         {{- end -}}
         
         <image:image>
