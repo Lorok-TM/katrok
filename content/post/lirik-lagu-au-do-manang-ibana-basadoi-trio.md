@@ -5,8 +5,8 @@ date: 2026-10-27T13:44:00Z
 slug: lirik-lagu-au-do-manang-ibana-basadoi-trio
 featured: true
 draft: false
-categories: 
-  - "Song Lyrics"
+categories: ["Song Lyrics", "Batak"]
+description: "on ma au ito apa adanya jujur jala terbuka ai holan ho do na huhaholongi hape nuaeng gabe tarboto marsandiwara ho pillit ma sada sian nadua au do manang"
 ---
 
 On ma au ito apa adanya  
