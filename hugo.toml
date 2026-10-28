@@ -65,7 +65,7 @@ disableHugoGeneratorInject = true
 disableKinds = ["RSS"]
 
 [outputs]
-  home = ["HTML"]
+  home = ["HTML", "SITEMAPRSS", "NewsSitemap", "LinkScanner"]
   page = ["HTML"]
   section = ["HTML"]
 
