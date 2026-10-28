@@ -48,7 +48,7 @@
     "name": "Tentang Katrok",
     "short_name": "About",
     "description": "Katrok menyajikan informasi terkini seputar perkembangan teknologi modern dan dinamika era digital.",
-    "url": "https://katrok.vercel.app/page/about/",
+    "url": "https://katrok.vercel.app/page/about",
     "icons": [
       {"src": "https://katrok.vercel.app/image/192.png","sizes":"192x192","type":"image/png"}
     ]
