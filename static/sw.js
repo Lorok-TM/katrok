@@ -60,7 +60,7 @@ self.addEventListener('fetch', (event) => {
 
           .catch(() => {
             return caches.match(event.request, { ignoreSearch: true }).then((response) => {
-              return response || caches.match('/offline') || caches.match('/');
+              return response || caches.match('/offline/') || caches.match('/');
             });
           })
         
