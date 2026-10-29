@@ -1,11 +1,12 @@
 {
   "cleanUrls": true,
-  "routes": [
+  "rewrites": [
     {
-      "src": "/offline.html",
-      "dest": "/offline.html",
-      "continue": false
-    },
+      "source": "/offline.html",
+      "destination": "/offline"
+    }
+  ],
+  "routes": [
     {
       "src": "/index.xml",
       "status": 301,
