@@ -1,14 +1,18 @@
-const CACHE_NAME = 'katrok-pwa-cache-v1';
+const CACHE_NAME = 'katrok-pwa-cache-v5';
 const ASSETS_TO_CACHE = [
   '/',
-  '/offline',
+  '/offline.html',
+  '/offline/',
+  '/offline/index.html',
   '/favicon.ico',
-  '/author',
-  '/categories',
-  '/page/about',
-  '/page/contact',
-  '/post',
-  '/archives'
+  '/author/',
+  '/author/katrok/',
+  '/categories/',
+  '/page/',
+  '/page/about/',
+  '/page/contact/',
+  '/post/',
+  '/archives/'
 ];
 
 self.addEventListener('install', (event) => {
@@ -16,12 +20,9 @@ self.addEventListener('install', (event) => {
     caches.open(CACHE_NAME).then((cache) => {
       return Promise.all(
         ASSETS_TO_CACHE.map((url) => {
-          return fetch(url)
+          return fetch(new Request(url, { mode: 'no-cors', credentials: 'omit' }))
             .then((response) => {
-              if (response.ok) {
-                return cache.put(url, response);
-              }
-              throw new Error(`Respons ora OK kanggo URL: ${url}`);
+              return cache.put(url, response);
             })
             .catch((err) => console.error('Gagal pre-cache:', url, err));
         })
@@ -43,7 +44,6 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('fetch', (event) => {
   const requestUrl = new URL(event.request.url);
-  
   if (requestUrl.origin === self.location.origin) {
     if (event.request.mode === 'navigate' || (event.request.method === 'GET' && event.request.headers.get('accept').includes('text/html'))) {
       event.respondWith(
@@ -59,7 +59,10 @@ self.addEventListener('fetch', (event) => {
           })
           .catch(() => {
             return caches.match(event.request, { ignoreSearch: true }).then((response) => {
-              return response || caches.match('/offline') || caches.match('/');
+              if (response) return response;
+              return caches.match('/offline/')
+              .then((res) => res || caches.match('/offline/index.html'))
+              .then((res) => res || caches.match('/'));
             });
           })
       );
