@@ -1,11 +1,5 @@
 {
   "cleanUrls": true,
-  "rewrites": [
-    {
-      "source": "/offline.html",
-      "destination": "/offline"
-    }
-  ],
   "routes": [
     {
       "src": "/index.xml",
@@ -13,6 +7,10 @@
       "headers": {
         "Location": "/sitemap.rss"
       }
+    },
+    {
+      "src": "/offline.html",
+      "dest": "/offline.html"
     },
     {
       "src": "/sitemap.rss",
@@ -25,7 +23,11 @@
       "handle": "filesystem"
     },
     {
-      "src": "/((?!offline).*[^/])$",
+      "src": "/offline.html",
+      "dest": "/offline.html"
+    },
+    {
+      "src": "/((?!offline\\.html$).*[^/])$",
       "status": 301,
       "headers": {
         "Location": "/$1/"
@@ -60,4 +62,3 @@
     }
   ]
 }
-
