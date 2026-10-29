@@ -10,10 +10,6 @@
       }
     },
     {
-      "src": "/offline.html",
-      "dest": "/offline.html"
-    },
-    {
       "src": "/sitemap.rss",
       "headers": {
         "Content-Type": "application/xml; charset=utf-8"
@@ -42,7 +38,7 @@
       ]
     },
     {
-      "source": "/offline.html",
+      "source": "/offline/",
       "headers": [
         {
           "key": "Cache-Control",
