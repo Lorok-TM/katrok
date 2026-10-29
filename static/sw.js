@@ -57,15 +57,13 @@ self.addEventListener('fetch', (event) => {
             }
             return networkResponse;
           })
+
           .catch(() => {
             return caches.match(event.request, { ignoreSearch: true }).then((response) => {
-              if (response) return response;
-              return caches.match('/offline')
-              .then((res) => res || caches.match('/offline/'))
-              .then((res) => res || caches.match('/offline.html'))
-              .then((res) => res || caches.match('/'));
+              return response || caches.match('/offline') || caches.match('/');
             });
           })
+        
       );
     } else {
       event.respondWith(
