@@ -62,6 +62,7 @@ self.addEventListener('fetch', (event) => {
               if (response) return response;
               return caches.match('/offline')
               .then((res) => res || caches.match('/offline/'))
+              .then((res) => res || caches.match('/offline.html'))
               .then((res) => res || caches.match('/'));
             });
           })
