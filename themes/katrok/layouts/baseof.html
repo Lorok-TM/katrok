@@ -217,7 +217,7 @@ if ('serviceWorker' in navigator) {
 <ul>
 {{- range $sidebar_featured -}}
 <li><a href="{{ .Permalink }}">{{ .Title }}</a>
-<span class="pub-date">{{ .Date.Format "02 Jan 2006" -}}</span>
+{{- /* <span class="pub-date">{{ .Date.Format "02 Jan 2006" -}}</span> */ -}}
 </li>
 {{- end -}}
 </ul></div>
