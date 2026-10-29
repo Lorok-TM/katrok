@@ -9,27 +9,27 @@ disableHugoGeneratorInject = true
 
 [[menu.main]]
   name = "Author"
-  pageRef = "/author"
+  pageRef = "/author/"
   weight = 20
 
 [[menu.main]]
   name = "Category"
-  pageRef = "/categories"
+  pageRef = "/categories/"
   weight = 20
 
 [[menu.main]]
   name = "Pages"
-  pageRef = "/page"
+  pageRef = "/page/"
   weight = 20
 
 [[menu.main]]
   name = "Posts"
-  pageRef = "/post"
+  pageRef = "/post/"
   weight = 20
 
 [[menu.main]]
   name = "Archive"
-  pageRef = "/archives"
+  pageRef = "/archives/"
   weight = 50
 
 [related]
