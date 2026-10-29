@@ -2,7 +2,6 @@ const CACHE_NAME = 'katrok-pwa-cache-v5';
 const ASSETS_TO_CACHE = [
   '/',
   '/offline/',
-  '/offline/index.html',
   '/favicon.ico',
   '/author/',
   '/author/katrok/',
@@ -60,7 +59,6 @@ self.addEventListener('fetch', (event) => {
             return caches.match(event.request, { ignoreSearch: true }).then((response) => {
               if (response) return response;
               return caches.match('/offline/')
-              .then((res) => res || caches.match('/offline/index.html'))
               .then((res) => res || caches.match('/'));
             });
           })
