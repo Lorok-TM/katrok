@@ -1,6 +1,6 @@
 {
   "cleanUrls": true,
-  "trailingSlash": false,
+  "trailingSlash": true,
   "routes": [
     {
       "src": "/index.xml",
@@ -24,11 +24,7 @@
       "handle": "filesystem"
     },
     {
-      "src": "/offline.html",
-      "continue": true
-    },
-    {
-      "src": "/((?!offline\\.html$).*)",
+      "src": "/(.*)",
       "status": 301,
       "headers": {
         "Location": "/"
