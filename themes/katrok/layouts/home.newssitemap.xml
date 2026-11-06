@@ -18,9 +18,13 @@
     {{- $newsPages = $newsPages | first $limit -}}
 {{- end -}}
 
-{{- printf "<?xml version=\"1.0\"?>\n<?xml-stylesheet type=\"text/xsl\" href=\"/sitemap-news-style.xsl\"?>" | safeHTML -}}
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+{{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>\n<?xml-stylesheet type=\"text/xsl\" href=\"/sitemap-news-style.xsl\"?>" | safeHTML -}}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
 {{- range $newsPages -}}
+
     <url>
         <loc><![CDATA[{{ .Permalink }}]]></loc>
         <news:news>
@@ -29,7 +33,7 @@
                 <news:language><![CDATA[{{ site.Language.Locale | default "id" }}]]></news:language>
             </news:publication>
             <news:publication_date><![CDATA[{{ .PublishDate.Format "2006-01-02T15:04:05-07:00" }}]]></news:publication_date>
-            <news:title><![CDATA[{{ .Title }}]]></news:title>
+            <news:title><![CDATA[Lirik Lagu {{ .Title }}]]></news:title>
         </news:news>
         {{- /* Proses Gambar Dinamis + Gambar Cadangan */ -}}
         {{- $image := partial "helper/image" (dict "Image" .Params.image "Resources" .Resources "Context" .) -}}
