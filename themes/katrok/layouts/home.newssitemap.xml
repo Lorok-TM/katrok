@@ -18,7 +18,7 @@
     {{- $newsPages = $newsPages | first $limit -}}
 {{- end -}}
 
-{{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>\n<?xml-stylesheet type=\"text/xsl\" href=\"/sitemap-news-style.xsl\"?>" | safeHTML -}}
+{{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<?xml-stylesheet type=\"text/xsl\" href=\"/sitemap-news-style.xsl\"?>" | safeHTML -}}
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
