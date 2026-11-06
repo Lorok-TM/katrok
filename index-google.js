@@ -47,15 +47,15 @@ function readDir(dir) {
     <loc>${permalink}</loc>
     <news:news>
       <news:publication>
-        <news:name><![CDATA[${mediamu}]]></news:name>
-        <news:language><![CDATA[id]]></news:language>
+        <news:name>${mediamu}</news:name>
+        <news:language>id</news:language>
       </news:publication>
-      <news:publication_date><![CDATA[${formattedDate}]]></news:publication_date>
-      <news:title><![CDATA[Lirik Lagu ${data.title || "No Title"}]]></news:title>
+      <news:publication_date>${formattedDate}</news:publication_date>
+      <news:title>${data.title || "No Title"}</news:title>
     </news:news>
     <image:image>
-      <image:loc><![CDATA[${imgUrl}]]></image:loc>
-      <image:title><![CDATA[${data.title || "No Title"}]]></image:title>
+      <image:loc>${imgUrl}</image:loc>
+      <image:title>${data.title || "No Title"}</image:title>
     </image:image>
   </url>\n`;
           }
@@ -72,12 +72,9 @@ readDir(contentDir);
 // Nulis file fisik neng njero folder public hasil build Hugo
 const publicSitemapPath = './public/sitemap-news.xml';
 if (fs.existsSync('./public')) {
-  const fullXml = `<?xml version="1.0" encoding="utf-8" ?>
+  const fullXml = `<?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="/sitemap-news-style.xsl" ?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-\n${xmlEntries}</urlset>`;
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n${xmlEntries}</urlset>`;
   
   fs.writeFileSync(publicSitemapPath, fullXml, 'utf8');
   console.log(`[SUKSES BUILD] Sitemap-news.xml dinamis otomatis siap!`);
