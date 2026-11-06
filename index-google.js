@@ -51,7 +51,7 @@ function readDir(dir) {
         <news:language><![CDATA[id]]></news:language>
       </news:publication>
       <news:publication_date><![CDATA[${formattedDate}]]></news:publication_date>
-      <news:title><![CDATA[${data.title || "No Title"}]]></news:title>
+      <news:title><![CDATA[Lirik Lagu ${data.title || "No Title"}]]></news:title>
     </news:news>
     <image:image>
       <image:loc><![CDATA[${imgUrl}]]></image:loc>
@@ -61,7 +61,7 @@ function readDir(dir) {
           }
         }
       } catch (err) {
-        console.log(`Gagal membaca file: ${file}`);
+        console.log(`Gagal moco file: ${file}`);
       }
     }
   });
@@ -69,16 +69,21 @@ function readDir(dir) {
 
 readDir(contentDir);
 
+// Nulis file fisik neng njero folder public hasil build Hugo
 const publicSitemapPath = './public/sitemap-news.xml';
 if (fs.existsSync('./public')) {
-  const fullXml = `<?xml version="1.0"?>
+  const fullXml = `<?xml version="1.0" encoding="utf-8" ?>
 <?xml-stylesheet type="text/xsl" href="/sitemap-news-style.xsl" ?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"> \n${xmlEntries}</urlset>`;
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+\n${xmlEntries}</urlset>`;
   
   fs.writeFileSync(publicSitemapPath, fullXml, 'utf8');
   console.log(`[SUKSES BUILD] Sitemap-news.xml dinamis otomatis siap!`);
 }
 
+// ⚠️ PROSES AMAN (SAFE EXIT): Supoyo Vercel anti-gagal
 if (urlsToNotify.length > 0 && process.env.GOOGLE_SERVICE_ACCOUNT_KEY) {
   try {
     const keyData = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_KEY);
@@ -90,7 +95,7 @@ if (urlsToNotify.length > 0 && process.env.GOOGLE_SERVICE_ACCOUNT_KEY) {
     jwtClient.authorize(async (err, tokens) => {
       if (err) {
         console.error("Gagal otentikasi Google API:", err.message);
-        process.exit(0);
+        process.exit(0); // Panggah digawe sukses supoyo web tetep munggah online
       }
       for (const url of urlsToNotify) {
         try {
@@ -107,10 +112,10 @@ if (urlsToNotify.length > 0 && process.env.GOOGLE_SERVICE_ACCOUNT_KEY) {
       process.exit(0);
     });
   } catch (jsonErr) {
-    console.log("[INFO] Kunci API belum dibaca sempurna atau kosong. Safe bypass aktif.");
+    console.log("[INFO] Kunci API durung diwaca sampurna utawa kosong. Safe bypass aktif.");
     process.exit(0);
   }
 } else {
-  console.log("[INFO] Tidak ada artikel baru dalam 2 hari ini atau environment key kosong. Safe exit aktif.");
-  process.exit(0);
+  console.log("[INFO] Ora ono artikel anyar 2 dina iki utawa environment key kosong. Safe exit aktif.");
+  process.exit(0); // 100% SUKSES NENG MERIAL VERCEL
 }
