@@ -223,6 +223,7 @@ if ('serviceWorker' in navigator) {
 </ul></div>
 {{- end -}}
 {{- end -}}
+<div class="ads-sidebar" id="atContainer-cfeaf69fb73f631583bbdf8973b004d7"></div>
 </div>
 </div>
 </main>
@@ -238,10 +239,14 @@ let timerMunyuk;const munyuk = () => {["mousemove", "mousedown", "touchstart", "
                    
 var share=document.createElement("script");share.defer = true;share.type="text/javascript";share.src="//platform-api.sharethis.com/js/sharethis.js#property=5f5e6cc99486490011bc399d&amp;product=inline-share-buttons";document.head.appendChild(share);
 
+var script=document.createElement('script');script.src = 'http' + (location.protocol === 'https:' ? 's' : '') + '://bauval.org/22/cfeaf69fb73f631583bbdf8973b004d7';document.getElementsByClassName('ads-sidebar')[0].appendChild(script);
+                                      
 (function() {const aktifkanGambar = (el) => {const imgUrl = el.getAttribute('data-bg');if (imgUrl) {el.style.backgroundImage = `url('${imgUrl}')`;el.removeAttribute('data-bg');}};const loadAwal = () => {document.querySelectorAll('[data-bg]').forEach(aktifkanGambar);};if (document.readyState === 'loading') {document.addEventListener('DOMContentLoaded', loadAwal);} else {loadAwal();} const observer = new MutationObserver((mutations) => {mutations.forEach(mutation => {mutation.addedNodes.forEach(node => {if (node.nodeType === 1) {const bgs = node.querySelectorAll ? node.querySelectorAll('[data-bg]') : [];bgs.forEach(aktifkanGambar);if (node.hasAttribute('data-bg')) aktifkanGambar(node);}});});});observer.observe(document.body, { childList: true, subtree: true });})();
                                                                         
 console.log("Script munyuk Aktif!");};["mousemove", "mousedown", "touchstart", "scroll", "pointermove", "keydown", "click"].forEach(e => {window.addEventListener(e, munyuk, { passive: true });});timerMunyuk = setTimeout(munyuk, 4000);
 
+if (typeof atAsyncOptions !== 'object') var atAsyncOptions = [];atAsyncOptions.push({'key': 'cfeaf69fb73f631583bbdf8973b004d7','format': 'js','container': 'atContainer-cfeaf69fb73f631583bbdf8973b004d7','params' : {}});
+ 
 </script>
 <div id="pwa-combo-container" style="display: none;">
 <button id="pwa-install-btn" class="pwa-btn" style="display: none;"><span class="pwa-icon">📲</span><span class="pwa-text">Install Katrok</span></button><button id="pwa-notif-btn" class="pwa-notif-btn" style="display: none;" title="Aktifkan Notifikasi">🔔</button><button id="pwa-close-btn" class="pwa-close-btn" aria-label="Close">&times;</button>
